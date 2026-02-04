@@ -1,9 +1,10 @@
 catatan = []
 
 def tambah_catatan():
-    mapel = input("Masukkan mata pelajaran: ")
-    topik = input("Masukkan topik: ")
-    durasi = int(input("Masukkan durasi belajar (menit): "))
+    print("\n📚 ✨ Yuk, catat belajar kamu! ✨")
+    mapel = input("  📖 Mata pelajaran: ")
+    topik = input("  📝 Topik: ")
+    durasi = int(input("  ⏱️  Durasi belajar (menit): "))
     
     # Menyimpan data dalam bentuk dictionary (mudah dipahami pemula)
     catatan_baru = {
@@ -13,35 +14,50 @@ def tambah_catatan():
     }
     
     catatan.append(catatan_baru)
-    print(f"✓ Catatan ditambahkan: {mapel} - {topik} ({durasi} menit)\n")
+    print(f"\n🎉 Yeay! Catatan ditambahkan!")
+    print(f"   📚 {mapel} | 📝 {topik} | ⏱️  {durasi} menit")
+    print(f"   Semangat terus! 💪\n")
 
 def lihat_catatan():
     if len(catatan) == 0:
-        print("\n📝 Belum ada catatan belajar. Mulai tambahkan catatan!\n")
+        print("\n� Opps! Belum ada catatan belajar nih...")
+        print("   Yuk, mulai tambahkan catatan! 📚\n")
     else:
-        print("\n=== Daftar Catatan Belajar ===")
+        print("\n" + "="*45)
+        print("         📚 Daftar Catatan Belajar 📚")
+        print("="*45)
         for i, data in enumerate(catatan, 1):
-            print(f"{i}. {data['mapel']} - {data['topik']}")
-            print(f"   Durasi: {data['durasi']} menit")
-        print()
+            print(f"\n  {i}. 📖 {data['mapel'].upper()}")
+            print(f"     └─ 📝 {data['topik']}")
+            print(f"     └─ ⏱️  {data['durasi']} menit")
+        print("\n" + "="*45 + "\n")
 
 def total_waktu():
     if len(catatan) == 0:
-        print("\n📝 Belum ada catatan belajar. Mulai tambahkan catatan!\n")
+        print("\n� Belum ada catatan belajar nih!")
+        print("   Yuk, mulai catat sesi belajar kamu! 📚\n")
     else:
         total = sum(data["durasi"] for data in catatan)
         jam = total // 60
         menit = total % 60
         
-        print(f"\n⏱️  Total Waktu Belajar: {total} menit")
-        print(f"   ({jam} jam {menit} menit)\n")
+        print("\n" + "="*45)
+        print("       ⏱️  TOTAL WAKTU BELAJAR ⏱️")
+        print("="*45)
+        print(f"\n  📊 Total: {total} menit")
+        print(f"  🕐 Setara: {jam} jam {menit} menit")
+        print(f"\n  Hebat! Terus semangat! 💪✨")
+        print("\n" + "="*45 + "\n")
 
 def ringkasan_mingguan():
     if len(catatan) == 0:
-        print("\n📝 Belum ada catatan belajar.\n")
+        print("\n� Belum ada catatan belajar.")
+        print("   Yuk, mulai catat! 📚\n")
         return
     
-    print("\n=== Ringkasan Mingguan ===")
+    print("\n" + "="*50)
+    print("       📈 RINGKASAN MINGGUAN BELAJAR 📈")
+    print("="*50)
     
     # Kelompokkan by mapel
     mapel_dict = {}
@@ -54,23 +70,35 @@ def ringkasan_mingguan():
     total_semua = sum(mapel_dict.values())
     
     # Tampilkan ringkasan
-    for mapel, durasi in sorted(mapel_dict.items(), key=lambda x: x[1], reverse=True):
+    print()
+    for idx, (mapel, durasi) in enumerate(sorted(mapel_dict.items(), key=lambda x: x[1], reverse=True), 1):
         jam = durasi // 60
         menit = durasi % 60
         persentase = (durasi / total_semua * 100) if total_semua > 0 else 0
-        print(f"{mapel}: {durasi} menit ({jam}j {menit}m) - {persentase:.1f}%")
+        bar_length = int(persentase / 5)
+        bar = "█" * bar_length + "░" * (20 - bar_length)
+        print(f"  {idx}. 📚 {mapel.upper()}")
+        print(f"     [{bar}] {persentase:.1f}%")
+        print(f"     ⏱️  {durasi} menit ({jam}j {menit}m)\n")
     
     total_jam = total_semua // 60
     total_menit = total_semua % 60
-    print(f"\nTotal: {total_semua} menit ({total_jam}j {total_menit}m)\n")
+    print("="*50)
+    print(f"  📊 Total Keseluruhan: {total_semua} menit")
+    print(f"  🕐 Setara: {total_jam} jam {total_menit} menit")
+    print(f"  🌟 Kamu hebat! Terus semangat! 💪")
+    print("="*50 + "\n")
 
 def menu():
-    print("\n=== Study Log App ===")
-    print("1. Tambah catatan belajar")
-    print("2. Lihat catatan belajar")
-    print("3. Total waktu belajar")
-    print("4. Ringkasan mingguan")
-    print("5. Keluar")
+    print("\n" + "="*50)
+    print("        📚 STUDY LOG APP - SEMANGAT BELAJAR! 📚")
+    print("="*50)
+    print("\n  1️⃣  Tambah catatan belajar")
+    print("  2️⃣  Lihat catatan belajar")
+    print("  3️⃣  Total waktu belajar")
+    print("  4️⃣  Ringkasan mingguan")
+    print("  5️⃣  Keluar")
+    print("\n" + "="*50)
 
 while True:
     menu()
@@ -85,7 +113,8 @@ while True:
     elif pilihan == "4":
         ringkasan_mingguan()
     elif pilihan == "5":
-        print("Terima kasih, terus semangat belajar!")
+        print("\n🎓 Sampai jumpa! Terus semangat belajar ya! 💪✨")
+        print("\n     Jadilah versi terbaik dirimu! 🌟\n")
         break
     else:
-        print("Pilihan tidak valid")
+        print("\n❌ Pilihan tidak valid. Coba lagi! 😊\n")
